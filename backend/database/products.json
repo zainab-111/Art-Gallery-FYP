@@ -1,0 +1,92 @@
+[
+    {
+        "_id": {
+            "$oid": "5f15d8852a025143f9593a7c"
+        },
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1200px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+        "brand": "Mona Lisa",
+        "price": 250,
+        "rating": 1,
+        "numReviews": 0,
+        "isFeatured": true,
+        "name": "Mona Lisa",
+        "description": "Mona Lisa",
+        "category": {
+            "$oid": "5f15d5cdcb4a6642bddc0fe9"
+        },
+        "countInStock": 25,
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5f15d92ee520d44421ed8e9b"
+        },
+        "image": "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGFpbnRpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+        "brand": "Eye to Eye",
+        "price": 350.9,
+        "rating": 5,
+        "numReviews": 0,
+        "isFeatured": true,
+        "name": "Eye to Eye",
+        "description": "Eye to Eye",
+        "category": {
+            "$oid": "5f15d5b7cb4a6642bddc0fe8"
+        },
+        "countInStock": 10,
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5f15d964e520d44421ed8e9c"
+        },
+        "image": "https://i.pinimg.com/736x/90/7f/f7/907ff7b31d7de2f5430cfee79ded14d2.jpg",
+        "brand": "Sunset",
+        "price": 1350.9,
+        "rating": 5,
+        "numReviews": 0,
+        "isFeatured": true,
+        "name": "Sunset",
+        "description": "Sunset",
+        "category": {
+            "$oid": "5f15d5b7cb4a6642bddc0fe8"
+        },
+        "countInStock": 10,
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5f15d9b3e520d44421ed8e9d"
+        },
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1200px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+        "brand": "Mona Lisa Again",
+        "price": 490.9,
+        "rating": 5,
+        "numReviews": 0,
+        "isFeatured": true,
+        "name": "Mona Lisa Again",
+        "description": "Mona Lisa Again",
+        "category": {
+            "$oid": "5f15d5b7cb4a6642bddc0fe8"
+        },
+        "countInStock": 5,
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "5f15da13e520d44421ed8e9e"
+        },
+        "image": "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGFpbnRpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+        "brand": "Left Eye Right Eye",
+        "price": 1000,
+        "rating": 5,
+        "numReviews": null,
+        "isFeatured": true,
+        "name": "Left Eye Right Eye",
+        "description": "Left Eye Right Eye",
+        "category": {
+            "$oid": "5f15d5b2cb4a6642bddc0fe7"
+        },
+        "countInStock": 2,
+        "__v": 0
+    }
+]
