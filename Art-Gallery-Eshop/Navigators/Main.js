@@ -23,7 +23,11 @@ const Main = () => {
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
-        activeTintColor: "#e91e63",
+        activeTintColor: "#542F34",
+        inactiveTintColor: "white",
+        style: {
+          backgroundColor: "#D1ADBC"
+        },
       }}
     >
       <Tab.Screen
@@ -35,6 +39,7 @@ const Main = () => {
           ),
         }}
       />
+    {context.stateUser.user.isAdmin === true ? null : (
       <Tab.Screen
         name="Cart"
         component={CartNavigator}
@@ -47,18 +52,21 @@ const Main = () => {
           ),
         }}
       />
+      )}
+      {context.stateUser.user.isAdmin === true ? (
+        <Tab.Screen
+          name="Admin"
+          component={AdminNavigator}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Icon name="cog" color={color} size={30} />
+            ),
+            style: {
 
-{/*{context.stateUser.user.isAdmin == true ? ( */}      
-      <Tab.Screen
-        name="Admin"
-        component={AdminNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="cog" color={color} size={30} />
-          ),
-        }}
-      />
-       {/* ): null } */}
+            }
+          }}
+        />
+      ) : null}
 
       <Tab.Screen
         name="User"

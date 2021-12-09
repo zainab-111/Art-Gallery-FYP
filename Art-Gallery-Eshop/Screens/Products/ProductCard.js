@@ -35,9 +35,9 @@ const ProductCard = (props) => {
       <Text style={styles.price}>Rs.{price}</Text>
 
       {countInStock > 0 ? (
-        <View style={{ marginBottom: 60 }}>
+        <View style={{ marginBottom: 60, backgroundColor: "#542F34", borderRadius: 20, }}>
           <EasyButton
-            primary
+           // primary
             medium
             onPress={() => {
               props.addItemToCart(props.id),
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     width: width / 2 - 20,
     height: width / 1.7,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 55,
     marginBottom: 5,
     marginLeft: 10,
     alignItems: "center",
     elevation: 8,
-    backgroundColor: "#44715F",
+    backgroundColor: "#D1ADBC",
   },
   image: {
     width: width / 2 - 20 - 10,
@@ -94,13 +94,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 15,
     textAlign: "center",
+    justifyContent: "center",
+    color: "white",
   },
   price: {
     fontSize: 20,
-    color: "orange",
-    marginTop: 10,
+    color: "#542F34",
+    marginTop: 5,
+    marginBottom: 10,
+    fontWeight: "bold",
   },
 });
 

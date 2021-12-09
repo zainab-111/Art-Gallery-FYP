@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     top: -4,
     right: -15,
+    backgroundColor: "#542F34",
   },
   text: {
     fontSize: 12,

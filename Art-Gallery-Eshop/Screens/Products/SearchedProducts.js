@@ -7,7 +7,7 @@ var { width } = Dimensions.get("window");
 const SearchedProduct = (props) => {
   const { productsFiltered } = props;
   return (
-    <Content style={{ width: width }}>
+    <Content style={[{width: width}, styles.SearchProduct]}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
           <ListItem
@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 100,
   },
+  SearchProduct: {
+    backgroundColor: "#ffff"
+  }
 });
 
 export default SearchedProduct;

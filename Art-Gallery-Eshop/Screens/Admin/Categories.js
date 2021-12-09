@@ -95,7 +95,7 @@ const Categories = (props) => {
                 <FlatList 
                     data={categories}
                     renderItem={({ item, index }) => (
-                        <Item item={item} index={index} delete={deleteCategory} />
+                        <Item item={item} index={index} delete={() => deleteCategory(item.id)} />
                     )}
                     keyExtractor={(item) => item.id}
                 />
@@ -113,6 +113,7 @@ const Categories = (props) => {
                 </View>
                 <View>
                     <EasyButton
+                    style={styles.SubmitButton}
                         medium
                         primary
                         onPress={() => addCategory()}
@@ -137,6 +138,10 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         left: 0
+    },
+    SubmitButton:{
+        backgroundColor: "#A6607C",
+        borderRadius: 20,
     },
     input: {
         height: 40,

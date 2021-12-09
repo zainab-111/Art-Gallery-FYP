@@ -123,6 +123,7 @@ const SingleProduct = (props) => {
         </Left>
         <Right>
           <EasyButton
+          style={styles.AddCartButton}
             primary
             medium
             onPress={() => {
@@ -137,7 +138,7 @@ const SingleProduct = (props) => {
           >
             <Text style={{ color: "white" }}>Add</Text>
           </EasyButton>
-          <EasyButton secondary medium onPress={OpenWEB}>
+          <EasyButton style={styles.ArButton} secondary medium onPress={OpenWEB}>
             <Text style={{ color: "white" }}>View in AR</Text>
           </EasyButton>
         </Right>
@@ -157,11 +158,20 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
     height: "100%",
+  //  backgroundColor: "red",
   },
   imageContainer: {
     backgroundColor: "white",
     padding: 0,
     margin: 0,
+  },
+  AddCartButton: {
+    backgroundColor: "#542F34",
+    borderRadius: 20,
+  },
+  ArButton: {
+    backgroundColor: "#A6607C",
+    borderRadius: 20,
   },
   image: {
     width: "100%",
@@ -191,7 +201,8 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 24,
     margin: 20,
-    color: "red",
+    color: "#542F34",
+    fontWeight: "bold",
   },
   availabilityContainer: {
     marginBottom: 20,

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
 import Error from "../../Shared/Error";
@@ -27,7 +27,7 @@ const Login = (props) => {
       password,
     };
 
-    if (email === "" || password === "" ) {
+    if (email === "" || password === "") {
       setError("Please fill in your credentials");
     } else {
       loginUser(user, context.dispatch);
@@ -35,7 +35,7 @@ const Login = (props) => {
   };
 
   return (
-    <FormContainer title={"Login"} >
+    <FormContainer title={"Login"} style={styles.Loginpage}>
       <Input
         placeholder={"Enter Email"}
         name={"email"}
@@ -51,19 +51,26 @@ const Login = (props) => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      
+
       <View style={styles.buttonGroup}>
         {error ? <Error message={error} /> : null}
-        <EasyButton large primary onPress={() => handleSubmit()}>
+        <EasyButton
+          style={styles.LoginButton}
+          large
+          primary
+          onPress={() => handleSubmit()}
+        >
           <Text style={{ color: "white" }}>Login</Text>
         </EasyButton>
       </View>
-      <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
-        <Text style={styles.middleText}>Don't have an account yet?</Text>
+      <View style={[{ marginTop: 30 }, styles.buttonGroup]}>
+        <Text style={styles.middleText}>New to Art Gallery? Register now</Text>
         <EasyButton
-        large
-        secondary 
-        onPress={() => props.navigation.navigate("Register")}>
+          style={styles.RegisterButton}
+          large
+          secondary
+          onPress={() => props.navigation.navigate("Register")}
+        >
           <Text style={{ color: "white" }}>Register</Text>
         </EasyButton>
       </View>
@@ -79,6 +86,19 @@ const styles = StyleSheet.create({
   middleText: {
     marginBottom: 20,
     alignSelf: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  LoginButton: {
+    backgroundColor: "#542F34",
+    borderRadius: 20,
+  },
+  RegisterButton: {
+    backgroundColor: "#A6607C",
+    borderRadius: 20,
+  },
+  Loginpage: {
+    backgroundColor: "#ffff",
   },
 });
 

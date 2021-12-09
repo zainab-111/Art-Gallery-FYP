@@ -7,7 +7,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { Container, Header, Icon, Item, Input, Text } from "native-base";
+import { Container, Header, Icon, Item, Input, Text, Right } from "native-base";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 
@@ -92,9 +92,8 @@ const ProductContainer = (props) => {
         ? [setProductsCtg(initialState), setActive(true)]
         : [
             setProductsCtg(
-              products.filter((i) => i.category._id === ctg),
-              setActive(true)
-            ),
+              products.filter((i) => i.category === ctg),
+            ),setActive(true),
           ];
     }
   };
@@ -102,14 +101,17 @@ const ProductContainer = (props) => {
   return (
     <>
       {loading == false ? (
-        <Container style={{ backgroundColor: '#44715F'}}>
-          <Header searchBar rounded style={{ backgroundColor: '#9FB6AD'}}>
-            <Item >
-              <Icon name="ios-search" />
+        // <Container style={{ backgroundColor: "#44715F" }}>
+        <>
+          <Header searchBar rounded style={{backgroundColor: "#ffff"}}>
+            <Item style={styles.SearchHeader}>
+              <Icon name="ios-search" style={styles.SearchIcon} />
               <Input
-                placeholder="Search"
+                placeholder="Search Here ..."
                 onFocus={openList}
                 onChangeText={(text) => searchProduct(text)}
+                style={styles.SearchText}
+                color="white"
               />
               {focus == true ? (
                 <Icon onPress={onBlur} name="ios-close" />
@@ -123,41 +125,43 @@ const ProductContainer = (props) => {
             />
           ) : (
             <ScrollView>
+              {/* <View> */}
+              
               <View>
-                <View>
-                  <Banner />
-                </View>
-                 <View>
-                  <CategoryFilter
-                    categories={categories}
-                    categoryFilter={changeCtg}
-                    productsCtg={productsCtg}
-                    active={active}
-                    setActive={setActive}
-                  />
-                </View>
-                {productsCtg.length > 0 ? (
-                  <View style={styles.listContainer}>
-                    {productsCtg.map((item) => {
-                      return (
-                        <ProductList
-                          navigation={props.navigation}
-                          key={item.name}
-                          item={item}
-                        />
-                      );
-                    })}
-                  </View>
-                ) : (
-                  <View style={[styles.center, { height: height / 2 }]}>
-                    <Text>No products found</Text>
-                  </View>
-                )}
+                <CategoryFilter
+                  categories={categories}
+                  categoryFilter={changeCtg}
+                  productsCtg={productsCtg}
+                  active={active}
+                  setActive={setActive}
+                />
               </View>
+              <View>
+                <Banner />
+              </View>
+              {productsCtg.length > 0 ? (
+                <View style={styles.listContainer}>
+                  {productsCtg.map((item) => {
+                    return (
+                      <ProductList
+                        navigation={props.navigation}
+                        key={item.name}
+                        item={item}
+                      />
+                    );
+                  })}
+                </View>
+              ) : (
+                <View style={[styles.center, { height: height / 2 }]}>
+                  <Text>No products found</Text>
+                </View>
+              )}
+              {/* </View> */}
             </ScrollView>
           )}
-        </Container>
+        </>
       ) : (
+        // </Container>
         // Loading
         <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
           <ActivityIndicator size="large" color="green" />
@@ -170,21 +174,26 @@ const ProductContainer = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexWrap: "wrap",
-    backgroundColor: "gainsboro",
+  //  backgroundColor: "black",
   },
   listContainer: {
-    height: height,
+    // height: height,
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",
     flexWrap: "wrap",
-    backgroundColor: "gainsboro",
-    marginBottom: '170%',
-  // overflow: 'visible',
+    backgroundColor: "#ffff",
+    // marginBottom: "170%",
+    // overflow: 'visible',
   },
   center: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  SearchHeader: {
+    borderRadius: 20,
+    backgroundColor: "#D1ADBC",
+    color: "white",
   },
 });
 

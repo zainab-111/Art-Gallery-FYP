@@ -40,7 +40,7 @@ const Banner = () => {
               );
             })}
           </Swiper>
-          <View style={{ height: 20 }}></View>
+          <View style={{ height: 10 }}></View>
         </View>
       </View>
     </ScrollView>
@@ -50,7 +50,7 @@ const Banner = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "gainsboro",
+    backgroundColor: "#ffff",
   },
   swiper: {
     width: width,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   imageBanner: {
     height: width / 2,
     width: width - 40,
-    borderRadius: 10,
+    borderRadius: 20,
     marginHorizontal: 20,
   },
 });

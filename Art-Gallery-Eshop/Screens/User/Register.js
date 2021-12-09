@@ -91,12 +91,13 @@ const Register = (props) => {
           {error ? <Error message={error} /> : null}
         </View>
         <View>
-          <EasyButton large primary onPress={() => register()}>
+          <EasyButton style={styles.RegisterButton} large primary onPress={() => register()}>
             <Text style={{ color: "white" }}>Register</Text>
           </EasyButton>
         </View>
         <View>
           <EasyButton
+           style={styles.LoginButton}
             large
             secondary
             onPress={() => props.navigation.navigate("Login")}
@@ -114,6 +115,14 @@ const styles = StyleSheet.create({
     width: "80%",
     margin: 10,
     alignItems: "center",
+  },
+  LoginButton: {
+    backgroundColor: "#A6607C",
+    borderRadius: 20,
+  },
+  RegisterButton: {
+    backgroundColor: "#542F34",
+    borderRadius: 20,
   },
 });
 

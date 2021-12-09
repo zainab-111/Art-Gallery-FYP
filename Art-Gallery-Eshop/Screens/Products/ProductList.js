@@ -14,8 +14,7 @@ const ProductList = (props) => {
             props.navigation.navigate("Product Detail", { item: item})
         }
         >
-            <View style={{ width: width / 2, 
-                backgroundColor: 'gainsboro'}}
+            <View style={{ width: width / 2}}
         >
             <ProductCard {...item} />
             </View>
