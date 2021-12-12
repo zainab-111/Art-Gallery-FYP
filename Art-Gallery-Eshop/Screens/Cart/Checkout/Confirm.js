@@ -1,24 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Dimensions, ScrollView, Button } from "react-native";
-import { Text, Left, Right, ListItem, Thumbnail, Body } from "native-base";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Button,
+  Alert,
+  TextInput,
+} from "react-native";
+import {
+  Text,
+  Left,
+  Right,
+  ListItem,
+  Thumbnail,
+  Body,
+  // Alert,
+} from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../../Redux/Actions/cartActions";
 
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import baseURL from "../../../assets/common/baseUrl";
+import { CardField, useConfirmPayment } from "@stripe/stripe-react-native";
 
 var { width, height } = Dimensions.get("window");
 
 const Confirm = (props) => {
   const finalOrder = props.route.params;
-
+  const [bill, setBill] = useState(0);
+  const [email, setEmail] = useState("");
+  const [cardDetails, setCardDetails] = useState();
+  const { confirmPayment, loading } = useConfirmPayment();
   // Add this
   const [productUpdate, setProductUpdate] = useState();
   useEffect(() => {
-      if(finalOrder) {
-        getProducts(finalOrder);
-      }
+    if (finalOrder) {
+      getProducts(finalOrder);
+    }
     return () => {
       setProductUpdate();
     };
@@ -28,20 +48,19 @@ const Confirm = (props) => {
   const getProducts = (x) => {
     const order = x.order.order;
     var products = [];
-    if(order) {
-        order.orderItems.forEach((cart) => {
-            axios
-              .get(`${baseURL}products/${cart.product}`)
-              .then((data) => {
-                products.push(data.data);
-                setProductUpdate(products);
-              })
-              .catch((e) => {
-                console.log(e);
-              });
+    if (order) {
+      order.orderItems.forEach((cart) => {
+        axios
+          .get(`${baseURL}products/${cart.product}`)
+          .then((data) => {
+            products.push(data.data);
+            setProductUpdate(products);
+          })
+          .catch((e) => {
+            console.log(e);
           });
+      });
     }
-    
   };
 
   const confirmOrder = () => {
@@ -72,6 +91,54 @@ const Confirm = (props) => {
       });
   };
 
+  const fetchPaymentIntentClientSecret = async () => {
+    const response = await axios.post(`${baseURL}create-payment-intent`);
+    const { clientSecret, error } = response.data;
+    console.log(response.data);
+    return { clientSecret, error };
+  };
+
+  const handlePayPress = async () => {
+    //1.Gather the customer's billing information (e.g., email)
+    if (!cardDetails?.complete || !email) {
+      Alert.alert("Please enter Complete card details and Email");
+      return;
+    }
+    const billingDetails = {
+      email: email,
+    };
+    //2.Fetch the intent client secret from the backend
+    try {
+      const { clientSecret, error } = await fetchPaymentIntentClientSecret();
+      //2. confirm the payment
+      console.log(billingDetails);
+      if (error) {
+        console.log("Unable to process payment");
+      } else {
+        const { paymentIntent, error } = await confirmPayment(clientSecret, {
+          type: "Card",
+          billingDetails: billingDetails,
+        });
+        if (error) {
+          Alert.alert(`Payment Confirmation Error ${error.message}`);
+        } else if (paymentIntent) {
+          Alert.alert("Payment Successful", [
+            {
+              text: "OK",
+              onPress: () => {
+                console.log("Payment successful ", paymentIntent);
+                confirmOrder();
+              },
+            },
+          ]);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    //3.Confirm the payment with the card details
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.titleContainer}>
@@ -84,7 +151,7 @@ const Confirm = (props) => {
               <Text>Address2: {finalOrder.order.order.shippingAddress2}</Text>
               <Text>City: {finalOrder.order.order.city}</Text>
               <Text>Zip Code: {finalOrder.order.order.zip}</Text>
-              <Text>Country: {finalOrder.order.order.country}</Text>
+              <Text>Phone Number: {finalOrder.order.order.phone}</Text>
             </View>
             <Text style={styles.title}>Items:</Text>
             {/* CHANGE THIS */}
@@ -111,8 +178,33 @@ const Confirm = (props) => {
             )}
           </View>
         ) : null}
+      </View>
+      <View style={styles.stripecontainer}>
+        <TextInput
+          value={email}
+          autoCapitalize="none"
+          placeholder="E-mail"
+          keyboardType="email-address"
+          onChangeText={setEmail}
+          style={styles.input}
+        />
+        <CardField
+          postalCodeEnabled={true}
+          placeholder={{
+            number: "4242 4242 4242 4242",
+          }}
+          cardStyle={styles.card}
+          style={styles.cardContainer}
+          onCardChange={(cardDetails) => {
+            setCardDetails(cardDetails);
+          }}
+        />
         <View style={{ alignItems: "center", margin: 20 }}>
-          <Button title={"Place order"} onPress={confirmOrder} />
+          <Button
+            onPress={handlePayPress}
+            title="Place Order"
+            disabled={loading}
+          />
         </View>
       </View>
     </ScrollView>
@@ -127,7 +219,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    height: height * 0.8,
     padding: 8,
     alignContent: "center",
     backgroundColor: "white",
@@ -153,6 +245,26 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: "center",
     flexDirection: "row",
+  },
+  stripecontainer: {
+    flex: 1,
+    justifyContent: "center",
+    margin: 20,
+  },
+  input: {
+    backgroundColor: "#efefefef",
+
+    borderRadius: 8,
+    fontSize: 20,
+    height: 50,
+    padding: 10,
+  },
+  card: {
+    backgroundColor: "#efefefef",
+  },
+  cardContainer: {
+    height: 50,
+    marginVertical: 30,
   },
 });
 

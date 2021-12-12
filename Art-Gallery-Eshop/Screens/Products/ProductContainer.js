@@ -38,12 +38,13 @@ const ProductContainer = (props) => {
       axios
         .get(`${baseURL}products`)
         .then((res) => {
-          setProducts(res.data);
-          setProductsFiltered(res.data);
-          setProductsCtg(res.data);
-          setInitialState(res.data);
+          const products = res.data;
+          setProducts(products);
+          setProductsFiltered(products);
+          setProductsCtg(products);
+          setInitialState(products);
           setLoading(false);
-          console.log("prods", res);
+          console.log("prods", typeof products, products);
         })
         .catch((error) => {
           console.log("Api call error !!");
@@ -91,9 +92,8 @@ const ProductContainer = (props) => {
       ctg === "all"
         ? [setProductsCtg(initialState), setActive(true)]
         : [
-            setProductsCtg(
-              products.filter((i) => i.category === ctg),
-            ),setActive(true),
+            setProductsCtg(products.filter((i) => i.category === ctg)),
+            setActive(true),
           ];
     }
   };
@@ -103,7 +103,7 @@ const ProductContainer = (props) => {
       {loading == false ? (
         // <Container style={{ backgroundColor: "#44715F" }}>
         <>
-          <Header searchBar rounded style={{backgroundColor: "#ffff"}}>
+          <Header searchBar rounded style={{ backgroundColor: "#ffff" }}>
             <Item style={styles.SearchHeader}>
               <Icon name="ios-search" style={styles.SearchIcon} />
               <Input
@@ -126,7 +126,7 @@ const ProductContainer = (props) => {
           ) : (
             <ScrollView>
               {/* <View> */}
-              
+
               <View>
                 <CategoryFilter
                   categories={categories}
@@ -141,11 +141,11 @@ const ProductContainer = (props) => {
               </View>
               {productsCtg.length > 0 ? (
                 <View style={styles.listContainer}>
-                  {productsCtg.map((item) => {
+                  {productsCtg.map((item, index) => {
                     return (
                       <ProductList
                         navigation={props.navigation}
-                        key={item.name}
+                        key={index}
                         item={item}
                       />
                     );
@@ -174,7 +174,7 @@ const ProductContainer = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexWrap: "wrap",
-  //  backgroundColor: "black",
+    //  backgroundColor: "black",
   },
   listContainer: {
     // height: height,

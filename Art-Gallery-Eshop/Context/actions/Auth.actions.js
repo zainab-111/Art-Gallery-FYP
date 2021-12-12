@@ -22,7 +22,10 @@ export const loginUser = (user, dispatch) => {
       if (data) {
         const token = data.token;
         AsyncStorage.setItem("jwt", token);
+        AsyncStorage.setItem("userProfile", JSON.stringify(user));
         const decoded = jwt_decode(token);
+        console.log("Decoded: ", decoded);
+        console.log("User: ", user);
         dispatch(setCurrentUser(decoded, user));
       } else {
         logoutUser(dispatch);
@@ -54,7 +57,23 @@ export const getUserProfile = (id) => {
 
 export const logoutUser = (dispatch) => {
   AsyncStorage.removeItem("jwt");
+  AsyncStorage.removeItem("userProfile");
   dispatch(setCurrentUser({}));
+};
+
+export const localSignin = async (token, dispatch) => {
+  try {
+    if (token) {
+      const tokenValue = await AsyncStorage.getItem("jwt");
+      const decoded = await jwt_decode(tokenValue);
+      console.log("DECODED: ", decoded);
+      let userProfile = await AsyncStorage.getItem("userProfile");
+      const user = JSON.parse(userProfile);
+      dispatch(setCurrentUser(decoded, user));
+    }
+  } catch (err) {
+    console.log("Local Signin Error: ", err.message);
+  }
 };
 
 export const setCurrentUser = (decoded, user) => {

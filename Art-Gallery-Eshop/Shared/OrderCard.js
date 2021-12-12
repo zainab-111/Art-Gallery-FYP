@@ -6,7 +6,7 @@ import TrafficLight from "./StyledComponents/TrafficLight";
 import EasyButton from "./StyledComponents/EasyButton";
 import Toast from "react-native-toast-message";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import baseURL from "../assets/common/baseUrl";
 
@@ -22,6 +22,8 @@ const OrderCard = (props) => {
   const [statusChange, setStatusChange] = useState();
   const [token, setToken] = useState();
   const [cardColor, setCardColor] = useState();
+
+  // console.log(props);
 
   useEffect(() => {
     if (props.editMode) {
@@ -114,7 +116,7 @@ const OrderCard = (props) => {
         </Text>
         <Text>City: {props.city}</Text>
         <Text>Country: {props.country}</Text>
-        <Text>Date Ordered: {props.dateOrdered.split("T")[0]}</Text>
+        <Text>Date Ordered: {props.dateOrdered ? props.dateOrdered.split('T')[0] : '24-12-2021'}</Text>
         <View style={styles.priceContainer}>
           <Text>Price: </Text>
           <Text style={styles.price}>$ {props.totalPrice}</Text>

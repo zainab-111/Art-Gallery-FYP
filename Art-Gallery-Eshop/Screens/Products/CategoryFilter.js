@@ -3,56 +3,56 @@ import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { ListItem, Badge, Text, Avatar } from "native-base";
 
 const CategoryFilter = (props) => {
+  const { categories, categoryFilter, setActive, productsCtg, active } = props;
   return (
     <ScrollView
       bounces={true}
       horizontal={true}
       style={{ backgroundColor: "#ffff" }}
     >
-      
       <ListItem style={{ margin: 0, padding: 0, borderRadius: 0 }}>
         <TouchableOpacity
           key={1}
           onPress={() => {
-            props.categoryFilter("all"), props.setActive(-1);
+            categoryFilter("all"), setActive(-1);
           }}
         >
           <Badge
-          //rounded="999px"
+            //rounded="999px"
             style={[
               styles.center,
               { margin: 5 },
-              props.active == -1 ? styles.active : styles.inactive,
+              active == -1 ? styles.active : styles.inactive,
             ]}
           >
             <Text style={{ color: "white" }}>All</Text>
           </Badge>
         </TouchableOpacity>
-        {props.categories.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            onPress={() => {
-              // console.log("id", item.id),
-              props.categoryFilter(item.id),
-                props.setActive(props.categories.indexOf(item));
-            }}
-          >
-            <Badge
-            //colorScheme="danger"
-            rounded="1000px"
-              style={[
-                styles.center,
-                { margin: 5 },
-                props.active == props.categories.indexOf(item)
-                  ? styles.active
-                  : styles.inactive,
-              ]}
+        {categories.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                // console.log("id", item.id),
+                categoryFilter(item.id), setActive(categories.indexOf(item));
+              }}
             >
-              <Text style={{ color: "white" }}>{item.name}</Text>
-            </Badge>
-            
-          </TouchableOpacity>
-        ))}
+              <Badge
+                //colorScheme="danger"
+                rounded="1000px"
+                style={[
+                  styles.center,
+                  { margin: 5 },
+                  active == categories.indexOf(item)
+                    ? styles.active
+                    : styles.inactive,
+                ]}
+              >
+                <Text style={{ color: "white" }}>{item.name}</Text>
+              </Badge>
+            </TouchableOpacity>
+          );
+        })}
       </ListItem>
     </ScrollView>
   );
